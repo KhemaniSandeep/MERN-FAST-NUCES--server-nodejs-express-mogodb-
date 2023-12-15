@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Sinta account.</title>
+    <link rel="stylesheet" href="./signup.css">
+</head>
+<body>
+    <div class="signup">
+        <form action="http://localhost:4000/userapi/signup" method="post">
+            <div class="div-create" >
+                <input type="text" name="username" placeholder="username">
+                <br><br>
+                <input type="email" name="email" placeholder="someone@gmail.com">
+                <br><br>
+                <input type="password" name="password" placeholder="password">
+                <br><br>
+                <input type="text" name="gender" placeholder="gender">
+            </div>
+            <div class="buttons">
+                <button type="submit" >Create your account</button>
+            </div>
+        </form>
+    </div>
+</body>
+</html>
