@@ -20,7 +20,7 @@ const allAdmin = async (req, res) => {
 
 const adminId = async (req, res) => {
     try {
-        await mongoose.connect(process.env.mongo_url)
+        // await mongoose.connect(process.env.mongo_url)
         const adminId = req.params.id;
         const find = await adminSchema.findById(adminId)
         if (find) {
@@ -36,7 +36,7 @@ const adminId = async (req, res) => {
 
 const createAdmin = async (req, res) => {
     try {
-        await mongoose.connect(process.env.mongo_url)
+        // await mongoose.connect(process.env.mongo_url)
         const { id, password, name, subject } = req.body
         const createAdmin = await adminSchema.create({ id, password, name, subject })
         res.json({ message: 'admin registered successfully.', data: createAdmin })
@@ -59,7 +59,7 @@ const updateAdmin = async (req, res) => {
     else {
         await adminSchema.updateOne({ id, name, password, subject })
         try {
-            await mongoose.connect(process.env.mongo_url)
+            // await mongoose.connect(process.env.mongo_url)
             res.json({ message: "The admin under given id has been updated.", Updated: req.body })
         } catch (err) {
             res.json({ message: err.message })
@@ -75,7 +75,7 @@ const deleteAdmin = async (req, res) => {
         const deleteAdmin = req.params.id
         await adminSchema.findById({ _id: deleteAdmin })
         const deleted = await adminSchema.deleteOne(deleteAdmin)
-        await mongoose.connect(process.env.mongo_url)
+        // await mongoose.connect(process.env.mongo_url)
         res.json({ message: "admin under given ID has been deleted!", Deleted: deleted })
     } catch (err) {
         res.json({ message: err.message })

@@ -28,7 +28,7 @@ const allInstructor = async (req, res) => {
 
 const instructorId = async (req, res) => {
     try {
-        await mongoose.connect(process.env.mongo_url)
+        // await mongoose.connect(process.env.mongo_url)
         const instructorId = req.params.id;
         const find = await instructorSchema.findById(instructorId)
         if (find) {
@@ -44,7 +44,7 @@ const instructorId = async (req, res) => {
 
 const createInstructor = async (req, res) => {
     try {
-        await mongoose.connect(process.env.mongo_url)
+        // await mongoose.connect(process.env.mongo_url)
         const { id, name, email, password, gender, subject } = req.body
         const createInstructor = await instructorSchema.create({ id, name, email, password, gender, subject })
         res.json({ message: 'Instructor registered successfully.', data: createInstructor })
@@ -67,7 +67,7 @@ const updateInstructor = async (req, res) => {
     else {
         await instructorSchema.updateOne({ id, name, password, subject })
         try {
-            await mongoose.connect(process.env.mongo_url)
+            // await mongoose.connect(process.env.mongo_url)
             res.json({ message: "The instructor under given id has been updated.", Updated: req.body })
         } catch (err) {
             res.json({ message: err.message })
@@ -83,7 +83,7 @@ const deleteInstructor = async (req, res) => {
         const deleteInstructor = req.params.id
         await instructorSchema.findById({ _id: deleteInstructor })
         const deleted = await instructorSchema.deleteOne(deleteInstructor)
-        await mongoose.connect(process.env.mongo_url)
+        // await mongoose.connect(process.env.mongo_url)
         res.json({ message: "Instructor under given ID has been deleted!", Deleted: deleted })
     } catch (err) {
         res.json({ message: err.message })

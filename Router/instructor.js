@@ -12,7 +12,7 @@ const { allInstructor, instructorId, createInstructor, updateInstructor, deleteI
 //API or paths
 
 router.get('/getall', allInstructor)
-router.get('/get/:id', instructorId)
+router.get('/:id', instructorId)
 router.post('/post', createInstructor)
 router.patch('/patch/:id', updateInstructor)
 router.delete('/delete/:id', deleteInstructor)

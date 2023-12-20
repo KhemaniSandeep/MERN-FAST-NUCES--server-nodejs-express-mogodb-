@@ -28,11 +28,9 @@ const studentRoute = require('./Router/student')
 
 //API or paths
 
-
 app.use('/instructorapi', instructorRoute)
 app.use('/studentapi', studentRoute)
 app.use('/adminapi', adminRoute)
-
 
 app.listen(port, console.log("Server is created at port 4000")) 
 

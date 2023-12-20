@@ -12,8 +12,8 @@
 require('dotenv').config()
 // const express=require('express')
 const mongoose = require('mongoose')
-const nodemailer=require('nodemailer')
-const jwt = require ('jsonwebtoken')
+const nodemailer = require('nodemailer')
+const jwt = require('jsonwebtoken')
 const { hash, compare } = require('bcrypt')
 const studentSchema = require('../Schema/student')
 
@@ -51,26 +51,25 @@ const studentById = async (req, res) => {
 const login = async (req, res) => {
     const { email, password } = req.body
     const student = await studentSchema.findOne({ email })
-    
-    if (student)  {
+
+    if (student) {
         // matchpassword = await studentSchema.findOne({ password })
         const decryptPass = await compare(password, student.password)
 
-        if(decryptPass){
-      
-        try {
-            const token =jwt.sign({email: student.email, password: student.password}, process.env.JWT)
-            // await mongoose.connect(process.env.mongo_url)
-            res.json({ message: "Successfully logged in.", LoginData: token })
-        } catch (err) {
-            res.json({ message: err.message, LoggedInstudent: req.body })
+        if (decryptPass) {
+
+            try {
+                const token = jwt.sign({ email: student.email, password: student.password }, process.env.JWT)
+                // await mongoose.connect(process.env.mongo_url)
+                res.json({ message: "Successfully logged in.", LoginData: token })
+            } catch (err) {
+                res.json({ message: err.message, LoggedInstudent: req.body })
+            }
         }
+        else {
+            res.json({ message: "Password is not correct!" })
         }
-        else{
-            res.json({message: "Password is not correct!"})
-        }
-    
-        
+
     }
     else {
         res.json({ message: "Email is incorrect, plz check!" })
@@ -83,7 +82,7 @@ const signup = async (req, res) => {
     const { studentName, email, password, gender } = req.body
 
 
-    if (studentName == null || email == null || password == null || gender==null) {
+    if (studentName == null || email == null || password == null || gender == null) {
         res.json({ message: "Plz enter required info first" })
     }
     else {
@@ -96,7 +95,7 @@ const signup = async (req, res) => {
                     const hashedPass = await hash(password, 10)
                     const signup = studentSchema.create({ studentName, email, password: hashedPass, gender })
                     res.json({ message: "This student has signed up successfully.", SignedUpStudent: signup })
-                        if (signup){
+                    if (signup) {
                         try {
                             const transport = nodemailer.createTransport({
                                 service: "gmail",
@@ -114,16 +113,16 @@ const signup = async (req, res) => {
                                 // html: "<h1> Welocome.</h1>"
                             }
                             await transport.sendMail(textmail)
-                            res.json({ mesage: 'Sent email.'})
+                            res.json({ mesage: 'Sent email.' })
                         } catch (err) {
                             console.error(err)
                             res.json({ message: err.message })
                         }
                     }
-                    else{
-                        res.json({message: "Email is not sent."})
+                    else {
+                        res.json({ message: "Email is not sent." })
                     }
-                        // res.json({ message: "This student has signed up successfully.", SignedUpstudent: signup })
+                    // res.json({ message: "This student has signed up successfully.", SignedUpstudent: signup })
 
                 } catch (err) {
                     console.error(err)
