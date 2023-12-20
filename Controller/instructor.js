@@ -47,13 +47,13 @@ const instructorId = async (req, res) => {
 
 const login =async (req, res) => {
     try { 
-    const { instructorId, password}=req.body
-    const find= await instructorSchema.findOne(instructorId)
+    const { email, password}=req.body
+    const find= await instructorSchema.findOne(email)
         if (find) {
             const checkPass= await compare (password, find.password)
             res.json({message: 'Instructor found'})
             if (checkPass){
-                const token= await jwt.sign({instructorId: find.instructorId, password: find.password}, process.env.JWT)
+                const token= await jwt.sign({eamil: find.eamil, password: find.password}, process.env.JWT)
                 res.json({message: 'Login successful', token: token})
             }
             else{
@@ -63,9 +63,10 @@ const login =async (req, res) => {
             else{
                 res.json({message: 'Instructor not found'})
             }
+        
 
-
-        } catch (err) {
+        } 
+        catch (err) {
             res.json({message: err.message})
         
         }}
