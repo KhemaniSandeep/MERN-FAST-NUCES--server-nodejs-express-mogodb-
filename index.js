@@ -21,17 +21,25 @@ app.use(cors())
 
 //Routes
 
-const productsRoute = require('./Router/products')
-const usersRoute = require('./Router/users')
+const adminRoute = require('./Router/admin')
+const instructorRoute = require('./Router/instructor')
+const studentRoute = require('./Router/student')
+// const { default: admin } = require('./Schema/admin')
 
 //API or paths
 
-app.use('/productapi', productsRoute)
-app.use('/userapi', usersRoute)
+
+app.use('/instructorapi', instructorRoute)
+app.use('/studentapi', studentRoute)
+app.use('/adminapi', adminRoute)
+
 
 app.listen(port, console.log("Server is created at port 4000")) 
 
 
+
+
+// posting through just HTML
 
 // to get response from signup.html file (input data).
 

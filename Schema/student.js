@@ -4,9 +4,9 @@
 
 const mongoose = require('mongoose')
 
-//Schema(types of data)
+// Student Schema(types of data)
 
-const usersSchema = new mongoose.Schema({
+const studentSchema = new mongoose.Schema({
     username: { type: String, required:true},
     email: { type: String, required: true, unique: true },
     password: { type: String, required: true},
@@ -14,4 +14,4 @@ const usersSchema = new mongoose.Schema({
     role:{type:String, default: 'user'}
 })
 
-module.exports = mongoose.model('user', usersSchema)
+module.exports=mongoose.model('student', studentSchema)
