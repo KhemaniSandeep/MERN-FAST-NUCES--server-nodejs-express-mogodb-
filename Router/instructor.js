@@ -7,13 +7,13 @@
 const express = require('express');
 const router = express.Router();
 
-const { allInstructor, instructorId, createInstructor, updateInstructor, deleteInstructor } = require('../Controller/instructor');
+const { allInstructor, instructorId, login, updateInstructor, deleteInstructor } = require('../Controller/instructor');
 
 //API or paths
 
 router.get('/getall', allInstructor)
 router.get('/:id', instructorId)
-router.post('/post', createInstructor)
+router.post('/login', login)
 router.patch('/patch/:id', updateInstructor)
 router.delete('/delete/:id', deleteInstructor)
 

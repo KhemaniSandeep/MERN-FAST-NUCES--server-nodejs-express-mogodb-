@@ -10,6 +10,9 @@
 // Instructor Controller
 
 const mongoose = require('mongoose')
+const nodemailer =require('nodemailer')
+const jwt =require('jsonwebtoken')
+const {compare}=require('bcrypt')
 const instructorSchema = require('../Schema/instructor')
 
 //Get All Instructors
@@ -40,19 +43,45 @@ const instructorId = async (req, res) => {
     }
 }
 
-//Register instructor
+//Login instructor
 
-const createInstructor = async (req, res) => {
-    try {
-        // await mongoose.connect(process.env.mongo_url)
-        const { id, name, email, password, gender, subject } = req.body
-        const createInstructor = await instructorSchema.create({ id, name, email, password, gender, subject })
-        res.json({ message: 'Instructor registered successfully.', data: createInstructor })
-    }
-    catch (err) {
-        res.json({ message: err.message })
-    }
-}
+const login =async (req, res) => {
+    try { 
+    const { instructorId, password}=req.body
+    const find= await instructorSchema.findOne(instructorId)
+        if (find) {
+            const checkPass= await compare (password, find.password)
+            if (checkPass){
+                const token= await jwt.sign({instructorId: find.instructorId, password: find.password}, process.env.JWT)
+                res.json({message: 'Login successful', token: token})
+            }
+            else{
+                res.json({message: 'Password is incorrect'})
+            }
+            }
+            else{
+                res.json({message: 'Instructor not found'})
+            }
+
+
+        } catch (err) {
+            res.json({message: err.message})
+        
+        }}
+
+
+
+// const createInstructor = async (req, res) => {
+//     try {
+//         // await mongoose.connect(process.env.mongo_url)
+//         const { id, name, email, password, gender, subject } = req.body
+//         const createInstructor = await instructorSchema.create({ id, name, email, password, gender, subject })
+//         res.json({ message: 'Instructor registered successfully.', data: createInstructor })
+//     }
+//     catch (err) {
+//         res.json({ message: err.message })
+//     }
+// }
 
 //Update a instructor
 
@@ -90,4 +119,4 @@ const deleteInstructor = async (req, res) => {
     }
 }
 
-module.exports = { allInstructor, instructorId, createInstructor, updateInstructor, deleteInstructor } 
+module.exports = { allInstructor, instructorId, login, updateInstructor, deleteInstructor } 
