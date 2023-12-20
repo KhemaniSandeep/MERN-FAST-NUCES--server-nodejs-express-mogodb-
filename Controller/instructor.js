@@ -51,6 +51,7 @@ const login =async (req, res) => {
     const find= await instructorSchema.findOne(instructorId)
         if (find) {
             const checkPass= await compare (password, find.password)
+            res.json({message: 'Instructor found'})
             if (checkPass){
                 const token= await jwt.sign({instructorId: find.instructorId, password: find.password}, process.env.JWT)
                 res.json({message: 'Login successful', token: token})
